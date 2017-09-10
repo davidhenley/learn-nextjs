@@ -3,7 +3,10 @@ import Link from 'next/link'
 
 const PostLink = ({ title }) => (
   <li>
-    <Link href={`/post?title=${title}`}>
+    <Link
+      as={`/p/${title.toLowerCase().replace(/\s/g,'-')}`}
+      href={`/post?title=${title}`}
+    >
       <a>{title}</a>
     </Link>
   </li>
