@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.16.2",
     "express": "^4.15.4",
     "next": "^3.2.2",
     "react": "^15.6.1",

@@ -1,24 +1,30 @@
 import Layout from '../components/Layout'
 import Link from 'next/link'
+import axios from 'axios'
 
-const PostLink = ({ title }) => (
-  <li>
-    <Link
-      as={`/p/${title.toLowerCase().replace(/\s/g,'-')}`}
-      href={`/post?title=${title}`}
-    >
-      <a>{title}</a>
-    </Link>
-  </li>
-)
-
-export default () => (
+const Index = (props) => (
   <Layout>
-    <h1>My Blog</h1>
+    <h1>Batman TV Shows</h1>
     <ul>
-      <PostLink title="Hello Next.js" />
-      <PostLink title="Learn Next.js is awesome" />
-      <PostLink title="Deploy apps with Zeit" />
+      {props.shows.map(({ show }) => (
+        <li key={show.id}>
+          <Link
+            as={`/p/${show.id}`}
+            href={`/post?id=${show.id}`}
+          >
+            <a>{show.name}</a>
+          </Link>
+        </li>
+      ))}
     </ul>
   </Layout>
 )
+
+Index.getInitialProps = async () => {
+  const { data } = await axios.get('https://api.tvmaze.com/search/shows?q=batman')
+  console.log('Show data fetched. Count:', data.length)
+
+  return { shows: data }
+}
+
+export default Index
