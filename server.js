@@ -9,7 +9,7 @@ app.prepare()
     const server = express()
 
     server.get('/p/:id', (req, res) => {
-      app.render(req, res, '/post', { title: req.params.id })
+      app.render(req, res, '/post', { id: req.params.id })
     })
 
     server.get('*', (req, res) => {

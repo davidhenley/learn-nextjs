@@ -1,14 +1,19 @@
 import Layout from '../components/Layout'
+import axios from 'axios'
 
-const Content = (props) => (
-  <div>
-    <h1>{props.url.query.title}</h1>
-    <p>This is the blog post content.</p>
-  </div>
-)
-
-export default (props) => (
+const Post = (props) => (
   <Layout>
-    <Content url={props.url} />
+    <h1>{props.show.name}</h1>
+    <p>{props.show.summary.replace(/<[/]?p>/g, '')}</p>
+    <img src={props.show.image.medium} />
   </Layout>
 )
+
+Post.getInitialProps = async (context) => {
+  const { id } = context.query
+  const { data } = await axios.get(`https://api.tvmaze.com/shows/${id}`)
+  console.log(`Fetched show: ${data.name}`)
+  return { show: data }
+}
+
+export default Post
